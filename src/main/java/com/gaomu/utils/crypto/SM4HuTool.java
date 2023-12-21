@@ -57,6 +57,10 @@ public class SM4HuTool {
         //需要一个长度为16的字符串 16*8=128 bit
         String key = RandomUtil.randomString(16);
         String iv = RandomUtil.randomString(16);
+        byte[] bytes = key.getBytes();
+        byte[] bytes1 = iv.getBytes();
+        System.out.println(Base64.encode(bytes));
+        System.out.println(Base64.encode(bytes1));
         System.out.println("生成1个128bit的加密key:"+key);
         System.out.println("生成1个128bit的加密iv:"+iv);
         String str = "admin123";
