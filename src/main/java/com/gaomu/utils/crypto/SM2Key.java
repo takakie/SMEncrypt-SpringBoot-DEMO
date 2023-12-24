@@ -1,21 +1,23 @@
 package com.gaomu.utils.crypto;
 
 import cn.hutool.core.codec.Base64;
+import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.SmUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.SM2;
+import org.bouncycastle.jce.interfaces.ECPrivateKey;
+import org.bouncycastle.jce.interfaces.ECPublicKey;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.util.encoders.Hex;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.KeyFactory;
-import java.security.KeyPair;
-import java.security.PrivateKey;
-import java.security.PublicKey;
+import java.security.*;
+import java.security.spec.ECGenParameterSpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
@@ -25,7 +27,64 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class SM2Key {
+
+
     static final BouncyCastleProvider bc = new BouncyCastleProvider();
+
+    public static Map<String, String> generateECSm2HexKey() {
+        SM2 sm2 = new SM2();
+        ECPublicKey publicKey = (ECPublicKey) sm2.getPublicKey();
+        ECPrivateKey privateKey = (ECPrivateKey) sm2.getPrivateKey();
+        // 获取公钥
+        byte[] publicKeyBytes = publicKey.getQ().getEncoded(false);
+        String publicKeyHex = HexUtil.encodeHexStr(publicKeyBytes);
+
+        // 获取64位私钥
+        String privateKeyHex = privateKey.getD().toString(16);
+        // BigInteger转成16进制时，不一定长度为64，如果私钥长度小于64，则在前方补0
+        StringBuilder privateKey64 = new StringBuilder(privateKeyHex);
+        while (privateKey64.length() < 64) {
+            privateKey64.insert(0, "0");
+        }
+
+        System.out.println("KEY_PUBLIC_KEY: " + publicKeyHex);
+        System.out.println("KEY_PRIVATE_KEY: " + privateKey64);
+        Map<String, String> result = new HashMap<>();
+        result.put("publicKey", publicKeyHex);
+        result.put("privateKey", privateKey64.toString());
+        return result;
+    }
+
+    public static Map<String,String> generateECBASE64Key(){
+        KeyPair pair = SecureUtil.generateKeyPair("SM2");
+        ECPublicKey publicKey = (ECPublicKey) pair.getPublic();
+        ECPrivateKey privateKey = (ECPrivateKey) pair.getPrivate();
+        // 获取公钥
+        byte[] publicKeyBytes = publicKey.getQ().getEncoded(false);
+        // 获取256位私钥
+        byte[] privateKeyBytes = privateKey.getD().toByteArray();
+        String publicKeyBase64 = Base64.encode(publicKeyBytes);
+        String privateKeyBase64 = Base64.encode(privateKeyBytes);
+
+        System.out.println("KEY_PUBLIC_KEY: " + publicKeyBase64);
+        System.out.println("KEY_PRIVATE_KEY: " + privateKeyBase64);
+
+        Map<String,String> map = new HashMap<>();
+        map.put("publicKey", publicKeyBase64);
+        map.put("privateKey", privateKeyBase64);
+        return map;
+    }
+
+    public static byte[] publicKeyDERToDEC(PublicKey publicKey){
+        ECPublicKey eCPublicKey = (ECPublicKey) publicKey;
+        return eCPublicKey.getQ().getEncoded(false);
+    }
+
+    public static byte[] privateKeyDERToDEC(PrivateKey privateKey){
+        ECPrivateKey eCPrivateKey = (ECPrivateKey) privateKey;
+        return eCPrivateKey.getD().toByteArray();
+    }
+
     /**
      * 从字符串中读取 私钥 key
      * @param privateKeyStr String
@@ -132,7 +191,9 @@ public class SM2Key {
         return priKey;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
+        generateECBASE64Key();
+        generateECSm2HexKey();
         String text = "admin123";
         System.err.println(text);
 

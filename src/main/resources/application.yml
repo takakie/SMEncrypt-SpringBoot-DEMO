@@ -4,3 +4,10 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 8080
+
+secretKey:
+  publicKey: 04c83eed01847c9b9c985dacb433a700c7d5131235223f11e1102f288011d949ebf8263d412a0a2f06b6f40d216fd27f79d5fbb579a9a9ee7654cc8a31c455047b
+  privateKey: AJeCFBphxgehm/CgerdM02KBkUqVpijsd0OM8c87XQN0
+

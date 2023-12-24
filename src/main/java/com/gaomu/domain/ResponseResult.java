@@ -51,4 +51,13 @@ public class ResponseResult<T> {
     public void setData(T data) {
         this.data = data;
     }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
 }

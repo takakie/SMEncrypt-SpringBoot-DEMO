@@ -37,6 +37,8 @@ public class User implements Serializable {
     private Date updateTime;
 
     private Integer delFlag;
+    private String secretKey;
+    private String iv;
 
 
 

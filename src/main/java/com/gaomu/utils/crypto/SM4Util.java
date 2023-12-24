@@ -1,22 +1,18 @@
 package com.gaomu.utils.crypto;
 
-import cn.hutool.core.date.StopWatch;
+import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.RandomUtil;
-import cn.hutool.crypto.SmUtil;
 import cn.hutool.crypto.symmetric.SM4;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.crypto.Mode;
 import cn.hutool.crypto.Padding;
 import cn.hutool.crypto.symmetric.SymmetricCrypto;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 import org.apache.commons.codec.DecoderException;
-import cn.hutool.core.util.HexUtil;
 
 
-public class SM4HuTool {
+public class SM4Util {
     /**
      * sm4 对称加密
      * @param args
@@ -29,7 +25,8 @@ public class SM4HuTool {
      * @return
      */
     public static String encryptCBC(String plainTxt,String key, String iv) {
-        SymmetricCrypto sm4 = new SM4(Mode.CBC, Padding.PKCS5Padding, key.getBytes(CharsetUtil.CHARSET_UTF_8), iv.getBytes(CharsetUtil.CHARSET_UTF_8));
+        //默认16进制密钥
+        SymmetricCrypto sm4 = new SM4(Mode.CBC, Padding.PKCS5Padding, HexUtil.decodeHex(key), HexUtil.decodeHex(iv));
         return sm4.encryptBase64(plainTxt);
     }
 
@@ -40,9 +37,10 @@ public class SM4HuTool {
      * @return
      */
     public static String decryptCBC(String cipherTxt, String key, String iv) {
+        //默认16进制密钥
         String plainTxt = "";
         try {
-            SymmetricCrypto sm4 = new SM4(Mode.CBC, Padding.PKCS5Padding, key.getBytes(CharsetUtil.CHARSET_UTF_8), iv.getBytes(CharsetUtil.CHARSET_UTF_8));
+            SymmetricCrypto sm4 = new SM4(Mode.CBC, Padding.PKCS5Padding, HexUtil.decodeHex(key), HexUtil.decodeHex(iv));
             byte[] cipherHex = Base64.decode(cipherTxt.trim());
             plainTxt = sm4.decryptStr(cipherHex, CharsetUtil.CHARSET_UTF_8);
         } catch (Exception e) {

@@ -29,7 +29,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(Objects.isNull(user)){
             throw new RuntimeException("用户名或密码错误!");
         }
-        System.out.println("-------------------" + username + "--登录成功------------------------");
         //查询对应的权限信息
         //把数据封装成UserDetails返回
         return new LoginUser(user);
