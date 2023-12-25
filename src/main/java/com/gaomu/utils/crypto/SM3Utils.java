@@ -21,11 +21,10 @@ public class SM3Utils {
     }
 
     public static boolean checkSign(String data, String sign, String timestamp){
-        byte[] checkSaltBytes = (timeSeparator + timestamp).getBytes(StandardCharsets.UTF_8);
-        SM3 sm3 = SmUtil.sm3WithSalt(checkSaltBytes);
+        data += timeSeparator + timestamp;
+        SM3 sm3 = SmUtil.sm3();
         byte[] hash = sm3.digest(data.getBytes());
         String enSign = HexUtil.encodeHexStr(hash);
-
         System.out.println("data: " + data);
         System.out.println("timeSeparator + timestamp: " + timeSeparator + timestamp);
         System.out.println("enSign: " + enSign);
