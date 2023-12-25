@@ -1,5 +1,6 @@
 package com.gaomu.config;
 
+import com.gaomu.filter.CachingRequestBodyFilter;
 import com.gaomu.filter.JwtAuthenticationTokenFilter;
 import com.gaomu.filter.SignatureHeaderFilter;
 import com.gaomu.utils.crypto.SM3PasswordEncoder;
@@ -27,6 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        return new BCryptPasswordEncoder();
 //    }
     @Autowired
+    private CachingRequestBodyFilter cachingRequestBodyFilter;
+    @Autowired
     private SignatureHeaderFilter signatureHeaderFilter;
 
     @Autowired
@@ -50,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //除上面外的所有登陆请求全部需要鉴权认证
                 .anyRequest().authenticated();
         //添加过滤器
-        http.addFilterBefore(signatureHeaderFilter, UsernamePasswordAuthenticationFilter.class)
+        http.addFilterBefore(cachingRequestBodyFilter,UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(signatureHeaderFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         //配置异常处理器
         http.exceptionHandling()

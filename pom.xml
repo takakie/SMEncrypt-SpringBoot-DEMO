@@ -14,6 +14,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+
+
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
@@ -69,6 +71,11 @@
       <artifactId>junit-platform-launcher</artifactId>
       <version>1.9.3</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.ulisesbocchio</groupId>
+      <artifactId>jasypt-spring-boot-starter</artifactId>
+      <version>3.0.4</version>
     </dependency>
 
     <!-- hutool请使用5.8.12以上版本， 该版本以下存在高危安全漏洞 -->

@@ -2,12 +2,20 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/auth_user?characterEncoding=utf-8&serverTimezone=UTC
     username: root
-    password: 123456
+    password: ENC(i4+qvUO1mKlzmIlkB++s3Q==)
     driver-class-name: com.mysql.cj.jdbc.Driver
 server:
   port: 8080
 
 secretKey:
-  publicKey: 04c83eed01847c9b9c985dacb433a700c7d5131235223f11e1102f288011d949ebf8263d412a0a2f06b6f40d216fd27f79d5fbb579a9a9ee7654cc8a31c455047b
-  privateKey: AJeCFBphxgehm/CgerdM02KBkUqVpijsd0OM8c87XQN0
+  publicKey: ENC(QlqxpZT3fV12e+Qt4o399DRF7Ya+bVPCWfIyZD/J4/Mz5aWsPhSyGswUbkrnmZXyJbYrXVhT65rw9V0b5jsN2ZE6V/vlikPL6Zc8AtqoQI83b02s/ZDbUQYKvEQN+/ZCMc2apHiVL4reDauwv3t6w1Q9AEQVq7wqiAg2+aZQhOwk3lzuZpXEP2BVuxCsdGRj)
+  privateKey: ENC(vQE3dreovo0B0BOAHge9q467YoQBwZHnCo3Y8JTR6m0aqJ5GA2p3F3GbRu33Xtc2)
 
+timeOut: 360
+
+# application.yml
+jasypt:
+  encryptor:
+    password: 33356f733270766f7959655165374256
+    algorithm: jasyptStringEncryptor
+    stringOutputType: UTF-8

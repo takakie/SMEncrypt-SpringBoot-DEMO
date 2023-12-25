@@ -18,6 +18,7 @@ public class SecretKeyServiceImpl implements SecretKeyService {
 
     @Override
     public ResponseResult getPublicKey() {
+        System.out.println("publicKey :" + publicKey );
         Map<String, String > map = new HashMap<>();
         map.put("publicKey", publicKey);
         return new ResponseResult(200, "获取成功", map);

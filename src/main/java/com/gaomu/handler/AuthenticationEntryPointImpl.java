@@ -19,7 +19,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
         //处理认证异常
-        ResponseResult result = new ResponseResult(HttpStatus.FORBIDDEN.value(), "登陆失败!");
+        ResponseResult result = new ResponseResult(HttpStatus.FORBIDDEN.value(), "过滤器拦截,请检测后端系统日志");
         String json = JSON.toJSONString(result);
         WebUtils.renderString(response, json);
     }
