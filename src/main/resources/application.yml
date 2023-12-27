@@ -8,14 +8,14 @@ server:
   port: 8080
 
 secretKey:
-  publicKey: ENC(QlqxpZT3fV12e+Qt4o399DRF7Ya+bVPCWfIyZD/J4/Mz5aWsPhSyGswUbkrnmZXyJbYrXVhT65rw9V0b5jsN2ZE6V/vlikPL6Zc8AtqoQI83b02s/ZDbUQYKvEQN+/ZCMc2apHiVL4reDauwv3t6w1Q9AEQVq7wqiAg2+aZQhOwk3lzuZpXEP2BVuxCsdGRj)
-  privateKey: ENC(vQE3dreovo0B0BOAHge9q467YoQBwZHnCo3Y8JTR6m0aqJ5GA2p3F3GbRu33Xtc2)
+  publicKey: 04ac65e37746267acd937a6532be574cf48e678f33f535b045baa92c3533892f8d66bff57cad3fe8e37a61a2693ca49c21c933c57b211e04bf104dc4a5d46aa3dc
+  privateKey: ENC(JV2x3CzzjzfMnK7SOxW0HyB4wfB2LdEDf170y5SQejQBR+gNkjScGEzbNFtH+iiS64ffwZGmuHJ6+g7MutrFPVSChv17mtnPp9wzA83qLmM=)
 
 timeOut: 360
 
 # application.yml
 jasypt:
   encryptor:
-    password: 33356f733270766f7959655165374256
+    password:
     algorithm: jasyptStringEncryptor
     stringOutputType: UTF-8

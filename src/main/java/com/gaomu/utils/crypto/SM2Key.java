@@ -17,7 +17,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.*;
-import java.security.spec.ECGenParameterSpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
@@ -35,23 +34,24 @@ public class SM2Key {
         SM2 sm2 = new SM2();
         ECPublicKey publicKey = (ECPublicKey) sm2.getPublicKey();
         ECPrivateKey privateKey = (ECPrivateKey) sm2.getPrivateKey();
-        // 获取公钥
+        // 获取EC公钥
         byte[] publicKeyBytes = publicKey.getQ().getEncoded(false);
         String publicKeyHex = HexUtil.encodeHexStr(publicKeyBytes);
 
-        // 获取64位私钥
+        // 获取EC私钥
         String privateKeyHex = privateKey.getD().toString(16);
         // BigInteger转成16进制时，不一定长度为64，如果私钥长度小于64，则在前方补0
-        StringBuilder privateKey64 = new StringBuilder(privateKeyHex);
-        while (privateKey64.length() < 64) {
-            privateKey64.insert(0, "0");
+        StringBuilder privateKey16 = new StringBuilder(privateKeyHex);
+        while (privateKey16.length() < 64) {
+            privateKey16.insert(0, "0");
         }
 
-        System.out.println("KEY_PUBLIC_KEY: " + publicKeyHex);
-        System.out.println("KEY_PRIVATE_KEY: " + privateKey64);
+        System.out.println("EC_KEY_PUBLIC_KEY: " + publicKeyHex);
+        System.out.println("EC_KEY_PRIVATE_KEY: " + privateKey16);
+
         Map<String, String> result = new HashMap<>();
         result.put("publicKey", publicKeyHex);
-        result.put("privateKey", privateKey64.toString());
+        result.put("privateKey", privateKey16.toString());
         return result;
     }
 
@@ -66,8 +66,8 @@ public class SM2Key {
         String publicKeyBase64 = Base64.encode(publicKeyBytes);
         String privateKeyBase64 = Base64.encode(privateKeyBytes);
 
-        System.out.println("KEY_PUBLIC_KEY: " + publicKeyBase64);
-        System.out.println("KEY_PRIVATE_KEY: " + privateKeyBase64);
+        System.out.println("EC_KEY_PUBLIC_KEY: " + publicKeyBase64);
+        System.out.println("EC_KEY_PRIVATE_KEY: " + privateKeyBase64);
 
         Map<String,String> map = new HashMap<>();
         map.put("publicKey", publicKeyBase64);
@@ -86,7 +86,7 @@ public class SM2Key {
     }
 
     /**
-     * 从字符串中读取 私钥 key
+     * 从BASE64字符串中读取 私钥 PrivateKey
      * @param privateKeyStr String
      * @return PrivateKey
      */
@@ -103,7 +103,7 @@ public class SM2Key {
     }
 
     /**
-     * 从字符串中读取 公钥 key
+     * 从BASE64字符串中读取 公钥 key
      * @param publicKeyStr String
      * @return PublicKey
      */
@@ -165,6 +165,7 @@ public class SM2Key {
                     .filter(line -> !line.startsWith("-----BEGIN SM2 PUBLIC KEY-----")
                             && !line.startsWith("-----END SM2 PUBLIC KEY-----"))
                     .collect(Collectors.joining());
+            System.out.println("base64PublicKeyString: " + base64PublicKeyString);
             pubKey = strToPublicKey(base64PublicKeyString);
         } catch (IOException e) {
             e.printStackTrace();
@@ -182,8 +183,8 @@ public class SM2Key {
                     .filter(line -> !line.startsWith("-----BEGIN SM2 PRIVATE KEY-----")
                             && !line.startsWith("-----END SM2 PRIVATE KEY-----"))
                     .collect(Collectors.joining());
+            System.out.println("base64PrivateKeyString: " + base64PrivateKeyString);
             priKey = strToPrivateKey(base64PrivateKeyString);
-            //System.out.println("BASE64 Private Key: " + base64PrivateKeyString);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -192,22 +193,27 @@ public class SM2Key {
     }
 
     public static void main(String[] args) throws Exception {
-        generateECBASE64Key();
-        generateECSm2HexKey();
         String text = "admin123";
-        System.err.println(text);
-
+        System.out.println("plaintext: " + text);
+        System.out.println("==================================生成EC-字符串-SM2密钥对=================================");
+        generateECSm2HexKey();
+        generateECBASE64Key();
+        System.out.println("=====================================生成SM2密钥对=======================================");
         KeyPair pair = SecureUtil.generateKeyPair("SM2");
         PublicKey aPublic = pair.getPublic();
         PrivateKey aPrivate = pair.getPrivate();
-        System.out.println(Arrays.toString(aPublic.getEncoded()));
-        System.out.println(Arrays.toString(aPrivate.getEncoded()));
+        System.out.println("KEY_PUBLIC_KEY: " + Arrays.toString(aPublic.getEncoded()));
+        System.out.println("KEY_PRIVATE_KEY: " + Arrays.toString(aPrivate.getEncoded()));
         //公钥 key 和私钥 key 转文件
-        SM2Key.exportPublicKey(aPublic,"E:\\Projects\\JAVA\\Encrypt-SpringBoot\\src\\main\\java\\com\\gaomu\\config\\sm2Key\\public_key.pem");
-        SM2Key.exportPrivateKey(aPrivate,"E:\\Projects\\JAVA\\Encrypt-SpringBoot\\src\\main\\java\\com\\gaomu\\config\\sm2Key\\private_key.pem");
-        PublicKey PublicKey = importPublicKey("E:\\Projects\\JAVA\\Encrypt-SpringBoot\\src\\main\\java\\com\\gaomu\\config\\sm2Key\\public_key.pem");
-        PrivateKey privateKey = importPrivateKey("E:\\Projects\\JAVA\\Encrypt-SpringBoot\\src\\main\\java\\com\\gaomu\\config\\sm2Key\\private_key.pem");
-        System.out.println("PublicKeyBytes" + Arrays.toString(PublicKey.getEncoded()));
-        System.out.println("PrivateKeyBytes" + Arrays.toString(privateKey.getEncoded()));
+        System.out.println("aPrivate: " + aPrivate);
+        System.out.println("aPublic: " + aPublic);
+        System.out.println("======================================导出密钥对=================================");
+        SM2Key.exportPublicKey(aPublic,"public_key.pem");
+        SM2Key.exportPrivateKey(aPrivate,"private_key.pem");
+        PublicKey PublicKey = importPublicKey("public_key.pem");
+        PrivateKey privateKey = importPrivateKey("private_key.pem");
+        System.out.println("PublicKeyBytes: " + Arrays.toString(PublicKey.getEncoded()));
+        System.out.println("PrivateKeyBytes: " + Arrays.toString(privateKey.getEncoded()));
+
     }
 }

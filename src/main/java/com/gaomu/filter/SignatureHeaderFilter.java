@@ -1,7 +1,7 @@
 package com.gaomu.filter;
 
 
-import com.gaomu.utils.crypto.SM3Utils;
+import com.gaomu.utils.crypto.SM3Util;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
@@ -60,8 +59,7 @@ public class SignatureHeaderFilter extends OncePerRequestFilter {
                 //TODO
             }
         }
-        System.out.println("data:" + data);
-        if (SM3Utils.checkSign(data.toString(), sign,  timestamp)){
+        if (SM3Util.checkSign(data.toString(), sign,  timestamp)){
             System.out.println("签名校验通过-OK");
         }
         else {

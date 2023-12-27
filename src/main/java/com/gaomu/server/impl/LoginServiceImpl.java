@@ -21,6 +21,8 @@ import java.util.Objects;
 
 @Service
 public class LoginServiceImpl implements LoginService {
+    @Value("${secretKey.privateKey}")
+    private String privateKey;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -29,10 +31,11 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public ResponseResult login(User user) {
+        System.out.println("privateKey: " + privateKey);
         //解密SM2登陆密码,SM4密钥
-        user.setPassword(SM2Util.sm2Decrypt(user.getPassword()));
-        user.setSecretKey(SM2Util.sm2Decrypt(user.getSecretKey()));
-        user.setIv(SM2Util.sm2Decrypt(user.getIv()));
+        user.setPassword(SM2Util.sm2Decrypt(user.getPassword(), privateKey));
+        user.setSecretKey(SM2Util.sm2Decrypt(user.getSecretKey(), privateKey));
+        user.setIv(SM2Util.sm2Decrypt(user.getIv(), privateKey));
         //Authentication authenticate进行用户认证
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);

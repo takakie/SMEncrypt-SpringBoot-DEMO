@@ -25,9 +25,17 @@ public class SM4Util {
      * @return
      */
     public static String encryptCBC(String plainTxt,String key, String iv) {
+        String cipherTxt = "";
         //默认16进制密钥
-        SymmetricCrypto sm4 = new SM4(Mode.CBC, Padding.PKCS5Padding, HexUtil.decodeHex(key), HexUtil.decodeHex(iv));
-        return sm4.encryptBase64(plainTxt);
+        try {
+            SymmetricCrypto sm4 = new SM4(Mode.CBC, Padding.PKCS5Padding, HexUtil.decodeHex(key), HexUtil.decodeHex(iv));
+            cipherTxt = sm4.encryptBase64(plainTxt);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("SM4 encryption failed");
+        }
+
+        return cipherTxt;
     }
 
     /**
@@ -43,8 +51,10 @@ public class SM4Util {
             SymmetricCrypto sm4 = new SM4(Mode.CBC, Padding.PKCS5Padding, HexUtil.decodeHex(key), HexUtil.decodeHex(iv));
             byte[] cipherHex = Base64.decode(cipherTxt.trim());
             plainTxt = sm4.decryptStr(cipherHex, CharsetUtil.CHARSET_UTF_8);
+
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("SM4 decryption failed");
         }
         return plainTxt;
     }
@@ -52,7 +62,7 @@ public class SM4Util {
 
     public static void main(String[] args) throws DecoderException {
         //SM4 requires a 128 bit key
-        //需要一个长度为16的字符串 16*8=128 bit
+        //需要一个长度为16的字符串 16*8=128 bit UTF-8编码密钥
         String key = RandomUtil.randomString(16);
         String iv = RandomUtil.randomString(16);
         byte[] bytes = key.getBytes();
@@ -69,41 +79,5 @@ public class SM4Util {
         String destr = decryptCBC(enstr, key, iv);
         System.out.println(destr);
 
-//        //原文
-//        String str = "hello";
-//        System.out.println("原文:"+str);
-//
-//        StopWatch sw = StopWatch.create("q11");
-//        sw.start();
-//
-//        SM4 sm41 = SmUtil.sm4(key.getBytes());
-//        //加密为Hex
-//        String hexPass = sm41.encryptHex(str);
-//        System.out.println("Hex形式的密文:"+hexPass);
-//        sw.stop();
-//        System.out.println(sw.getLastTaskInfo().getTimeSeconds());
-//
-//        sw.start();
-//        //加密为base64
-//        String base64Pass = sm41.encryptBase64(str);
-//        System.out.println("base64形式的密文:"+base64Pass);
-//        sw.stop();
-//        System.out.println(sw.getLastTaskInfo().getTimeSeconds());
-//
-//        System.out.println("--------------");
-//        //hex解密
-//        sw.start();
-//        String s = sm41.decryptStr(hexPass);
-//        sw.stop();
-//        System.out.println(s);
-//        System.out.println(sw.getLastTaskInfo().getTimeSeconds());
-//
-//        System.out.println("--------------");
-//        //base64解密
-//        sw.start();
-//        String s2 = sm41.decryptStr(base64Pass);
-//        sw.stop();
-//        System.out.println(sw.getLastTaskInfo().getTimeSeconds());
-//        System.out.println(s2);
     }
 }

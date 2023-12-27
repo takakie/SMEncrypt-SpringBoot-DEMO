@@ -18,7 +18,7 @@ public class DataTestServiceImpl implements DataTestService {
 
     @Override
     public ResponseResult getApiTest(String nickName, String phoneNumber) {
-        if(Objects.isNull(nickName) && Objects.isNull(phoneNumber)){
+        if(Objects.isNull(nickName) || Objects.isNull(phoneNumber)){
             return new ResponseResult(403, "请求参数为空");
         }
         //从loginUser中获取用户密钥等数据

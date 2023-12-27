@@ -8,8 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfig {
-    @Value("${JASYPT_SM4_PASSWORD:default}")
-    //@Value("#{systemEnvironment['JASYPT_SM4_PASSWORD'] ?: 'default'}")
+    @Value("${JASYPT_SM4_PASSWORD:defaultValue}")
     private String jasyptSM4Password;
 
 

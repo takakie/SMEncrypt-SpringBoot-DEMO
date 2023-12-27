@@ -1,7 +1,7 @@
 package com.gaomu.utils.crypto;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-import com.gaomu.utils.crypto.SM3Utils;
+
 /**
  * SM3密码编码
  *
@@ -11,12 +11,28 @@ import com.gaomu.utils.crypto.SM3Utils;
 public class SM3PasswordEncoder implements PasswordEncoder {
     @Override
     public String encode(CharSequence rawPassword) {
-        return SM3Utils.salt_digest(rawPassword.toString());
+        String pwdDigest = rawPassword.toString();
+        for (int i = 0; i < 3; i++){
+            pwdDigest = SM3Util.passwordDigest(pwdDigest);
+        }
+        return pwdDigest;
     }
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        String doSM3Encrypt = SM3Utils.salt_digest(rawPassword.toString());
-        return doSM3Encrypt.equals(encodedPassword);
+        String pwdDigest = rawPassword.toString();
+        for (int i = 0; i < 3; i++){
+            pwdDigest = SM3Util.passwordDigest(pwdDigest);
+        }
+        return pwdDigest.equals(encodedPassword);
+    }
+
+    public static void main(String[] args){
+        //生成数据库密码
+        String originalPassword = "admin123";
+        System.out.println("originalPassword: " + originalPassword);
+        SM3PasswordEncoder sm3PasswordEncoder = new SM3PasswordEncoder();
+        String pwdDigest = sm3PasswordEncoder.encode(originalPassword);
+        System.out.println("pwdDigest: " + pwdDigest);
     }
 }

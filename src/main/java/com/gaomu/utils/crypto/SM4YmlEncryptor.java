@@ -47,8 +47,8 @@ public class SM4YmlEncryptor implements PBEStringEncryptor {
     public static void main(String[] args) {
 
         SM4YmlEncryptor smm4 = new SM4YmlEncryptor();
-        smm4.setPassword("33356f733270766f7959655165374256");
-        String originalText = "AJeCFBphxgehm/CgerdM02KBkUqVpijsd0OM8c87XQN0";
+        smm4.setPassword(key);
+        String originalText = "01ee3f7d8f10938428ed38654b0ed81fa8d352dc0146d4fddb2e034d636d2749";
         String encryptedText = smm4.encrypt(originalText);
         String decryptedText = smm4.decrypt(encryptedText);
         System.out.println("Original text: " + originalText);
