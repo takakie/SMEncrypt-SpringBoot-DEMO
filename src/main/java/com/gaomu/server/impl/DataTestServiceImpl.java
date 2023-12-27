@@ -11,6 +11,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -33,9 +35,13 @@ public class DataTestServiceImpl implements DataTestService {
         phoneNumber = SM4Util.decryptCBC(phoneNumber, secretKey, iv);
 
         if (Objects.equals(nickName1, nickName) && Objects.equals(phoneNumber1, phoneNumber)) {
-            return new ResponseResult(200, "数据校验成功");
+            String email = loginUser.getUser().getEmail();
+            String cipherEmail =  SM4Util.encryptCBC(email, secretKey, iv);
+            Map<String, String > map = new HashMap<>();
+            map.put("email", cipherEmail);
+            return new ResponseResult(200, "获取邮件成功", map);
         }
 
-        return new ResponseResult(403, "数据校验失败");
+        return new ResponseResult(403, "请输入正确的昵称和手机号");
     }
 }
