@@ -9,7 +9,6 @@ import cn.hutool.crypto.Mode;
 import cn.hutool.crypto.Padding;
 import cn.hutool.crypto.symmetric.SymmetricCrypto;
 
-import org.apache.commons.codec.DecoderException;
 
 
 public class SM4Util {
@@ -60,7 +59,7 @@ public class SM4Util {
     }
 
 
-    public static void main(String[] args) throws DecoderException {
+    public static void main(String[] args){
         //SM4 requires a 128 bit key
         //需要一个长度为16的字符串 16*8=128 bit UTF-8编码密钥
         String key = RandomUtil.randomString(16);

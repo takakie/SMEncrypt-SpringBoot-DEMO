@@ -71,7 +71,7 @@ public class JwtUtil {
      * @return
      */
     public static String createJWT(String id, String subject, Long ttlMillis) {
-        JwtBuilder builder = getJwtBuilder(subject, ttlMillis, id); //设置过去时间
+        JwtBuilder builder = getJwtBuilder(subject, ttlMillis, id); //设置过期时间
         return builder.compact();
     }
 
