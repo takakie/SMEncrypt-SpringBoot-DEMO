@@ -1,20 +1,13 @@
 package com.gaomu.utils.crypto;
 
-import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PBEStringEncryptor;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
-
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.util.Base64;
 
 public class SM4YmlEncryptor implements PBEStringEncryptor {
 
     private String password;
 
-    private static String key = "33356f733270766f7959655165374256";
+    private static String key = "";
     private static String iv = "43374b4536657054564459466e774c53";
 
     @Override

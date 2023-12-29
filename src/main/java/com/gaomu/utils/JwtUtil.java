@@ -16,7 +16,10 @@ public class JwtUtil {
     //有效期为
     public static final Long JWT_TTL = 60 * 60 * 1000L;
     //设置私钥明文
+    // -----------------------***!!! 请勿硬编码JWT密钥 !!!****
     public static final String JWT_KEY = "takake";
+
+    public static final String ISSUER = "gaomu";
 
     public static String getUUID(){
         String token = UUID.randomUUID().toString().replaceAll("-", "");
@@ -36,7 +39,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setId(uuid) //唯一ID
                 .setSubject(subject)  //主题
-                .setIssuer("gaomu")  //签发者
+                .setIssuer(ISSUER)  //签发者
                 .setIssuedAt(now)   //签发时间
                 .signWith(signatureAlgorithm, secretKey)    //使用HS256加密算法
                 .setExpiration(expDate);
@@ -89,9 +92,8 @@ public class JwtUtil {
      * 解析
      * @param jwt
      * @return
-     * @throws Exception
      */
-    public static Claims parseJWT(String jwt) throws Exception {
+    public static Claims parseJWT(String jwt){
         SecretKey secretKey = generalKey();
         return Jwts.parser()
                 .setSigningKey(secretKey)

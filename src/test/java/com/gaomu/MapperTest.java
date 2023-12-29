@@ -13,20 +13,11 @@ import java.util.List;
 public class MapperTest {
     @Autowired
     private UserMapper userMapper;
-    @Test
-    public void TestBCryptPasswordEncoder(){
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String str = passwordEncoder.encode("123456");
-        boolean flag = passwordEncoder.matches("123456", "$2a$10$m9YSh0vb4CNyCLlLgAAfr.XxSwplEqCTAVtO3fHAzKOA6T3F.W0Z6");
-        System.out.println(str);
-        System.out.println(flag);
-    }
 
     @Test
     public void testUserMapper(){
         List<User> users = userMapper.selectList(null);
         System.out.println(users);
     }
-
 
 }

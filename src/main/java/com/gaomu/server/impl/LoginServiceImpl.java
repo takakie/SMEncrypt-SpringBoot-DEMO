@@ -1,6 +1,5 @@
 package com.gaomu.server.impl;
 
-import cn.hutool.json.JSON;
 import com.gaomu.domain.LoginUser;
 import com.gaomu.domain.ResponseResult;
 import com.gaomu.domain.User;
@@ -51,9 +50,7 @@ public class LoginServiceImpl implements LoginService {
         String loginUserKey = JwtUtil.getUUID();
         String userid = loginUser.getUser().getId().toString();
 //        String jwt = JwtUtil.createJWT(userid);
-        //JWT过期时间 ms
-        long ttlMillis = 1800000;
-        String jwt = JwtUtil.createJWT(loginUserKey, userid, ttlMillis);
+        String jwt = JwtUtil.createJWT(loginUserKey, userid, null);
         Map<String, String > map = new HashMap<>();
         map.put("token", jwt);
         //把完整的用户信息存入redis userid作为key
