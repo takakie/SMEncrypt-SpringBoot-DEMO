@@ -33,7 +33,7 @@
     <dependency>
       <groupId>com.fasterxml.jackson.module</groupId>
       <artifactId>jackson-module-kotlin</artifactId>
-      <version>2.13.0</version> <!-- 请使用你需要的版本 -->
+      <version>2.13.5</version>
     </dependency>
 
     <dependency>
@@ -60,7 +60,7 @@
     <dependency>
       <groupId>com.baomidou</groupId>
       <artifactId>mybatis-plus-boot-starter</artifactId>
-      <version>3.4.3</version>
+      <version>3.4.3.4</version>
     </dependency>
     <dependency>
       <groupId>mysql</groupId>

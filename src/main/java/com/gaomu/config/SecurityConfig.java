@@ -21,7 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //创建注入容器 BCryptPasswordEncoder
     //创建注入容器
-    //
 
 //    @Bean
 //    public PasswordEncoder passwordEncoder(){
