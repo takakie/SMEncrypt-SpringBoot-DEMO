@@ -55,8 +55,6 @@ public class SignatureHeaderFilter extends OncePerRequestFilter {
                     }
                 }
                 data.append('?').append(sb);
-
-                //TODO
             }
         }
         if (SM3Util.checkSign(data.toString(), sign,  timestamp)){
