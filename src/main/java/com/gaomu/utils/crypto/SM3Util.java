@@ -28,7 +28,7 @@ public class SM3Util {
         SM3 sm3 = SmUtil.sm3WithSalt((TRANSMIT_SALT + SEPARATOR) .getBytes(StandardCharsets.UTF_8));
         byte[] hash = sm3.digest(data.getBytes());
         String enSign = HexUtil.encodeHexStr(hash);
-        System.out.println("originalData: " + data);
+        System.out.println("originalData: " + TRANSMIT_SALT + SEPARATOR + data);
         System.out.println("javaSign: " + enSign);
         System.out.println("vueSign: " + sign);
         return enSign.equals(sign);

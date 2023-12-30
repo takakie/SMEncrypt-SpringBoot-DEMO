@@ -14,8 +14,8 @@ public class AppConfig {
 
     @Bean("jasyptStringEncryptor")
     public PBEStringEncryptor stringEncryptor() {
-        SM4YmlEncryptor customStringEncryptor = new SM4YmlEncryptor();
-        customStringEncryptor.setPassword(jasyptSM4Password);  // 设置你的加密密钥
-        return customStringEncryptor;
+        SM4YmlEncryptor sm4YmlEncryptor = new SM4YmlEncryptor();
+        sm4YmlEncryptor.setPassword(jasyptSM4Password);  // 设置你的加密密钥
+        return sm4YmlEncryptor;
     }
 }
