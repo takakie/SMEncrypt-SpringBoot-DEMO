@@ -1,15 +1,40 @@
-> 具体实现细节地址：
+---
+title: 国密传输加密与签名演示DEMO
+categories: 开发
+tags:
+  - 国密算法
+  - VUE
+  - SpringBoot
+  - SpringSecurity
+  - SM2
+  - SM3
+  - SM4
+  - 密码
+series: 国密登陆DEMO
+ai: >-
+  该文章是关于国密传输加密与签名演示的DEMO的摘要。它介绍了密钥交互和用户认证、传输签名校验、数据库用户密码加密和配置文件加密等方面的内容。文章提供了具体实现细节的地址和项目仓库地址。该项目仅为个人项目，仅提供演示作用。
+cover: 'https://hongkong-img.oss-cn-hongkong.aliyuncs.com/blog-web-img/R-C.jpg'
+abbrlink: 4398
+date: 2023-12-30 00:00:00
+---
 
-1. [密钥交换和用户认证](https://github.com/takakie/Encrypt-SpringBoot/settings)
-2. [敏感数据前加密传输](https://github.com/takakie/Encrypt-SpringBoot/settings)
-3. [传输签名校验](https://github.com/takakie/Encrypt-SpringBoot/settings)
-4. [数据库用户密码加密](https://github.com/takakie/Encrypt-SpringBoot/settings)
-5. [配置文件加密](https://github.com/takakie/Encrypt-SpringBoot/settings)
+> 具体实现细节链接地址：
 
-> 项目仓库地址
+1. [项目简介](https://blog.takake.co/posts/4398/)
+2. [密钥交换和用户认证](https://blog.takake.co/posts/57370/)
+3. [敏感数据加密传输](https://blog.takake.co/posts/3456/)
+4. [传输签名校验](https://blog.takake.co/posts/41661/)
+5. [数据库用户密码加密](https://blog.takake.co/posts/9622/)
+6. [配置文件加密](https://blog.takake.co/posts/50790/)
+
+> 项目仓库链接地址
 
 - [前端VUE](https://github.com/takakie/VUE-SMEncrypt-DEMO)
 - [后端SpringBoot](https://github.com/takakie/SMEncrypt-SpringBoot-DEMO)
+
+> 项目演示链接地址
+
+- [LOGIN-DEMO](http://119.23.186.200/#/Login)
 
 
 # 1.项目简介
@@ -83,7 +108,7 @@
 ## 2.2.需要一些简单的基础知识
 
 - [编码转换](https://blog.takake.co/posts/28315/)
-- [国密算法](https://github.com/takakie/Encrypt-SpringBoot/settings)
+- [国密算法](https://blog.takake.co/posts/49250/)
 
 ## 2.3.生产环境中的一些注意事项和提示
 
